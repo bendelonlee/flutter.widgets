@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
+import 'package:reorderables/reorderables.dart';
 
 import 'element_registry.dart';
 import 'item_positions_listener.dart';
@@ -168,8 +169,11 @@ class _PositionedListState extends State<PositionedList> {
             if (widget.positionedIndex > 0)
               SliverPadding(
                 padding: _leadingSliverPadding,
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
+                sliver: ReorderableSliverList(
+                  onReorder: (int item1, int item2) {
+                    print('reordered');
+                  },
+                  delegate: ReorderableSliverChildBuilderDelegate(
                     (context, index) => widget.separatorBuilder == null
                         ? _buildItem(widget.positionedIndex - (index + 1))
                         : _buildSeparatedListElement(
@@ -186,8 +190,11 @@ class _PositionedListState extends State<PositionedList> {
             SliverPadding(
               key: _centerKey,
               padding: _centerSliverPadding,
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
+              sliver: ReorderableSliverList(
+                  onReorder: (int item1, int item2) {
+                    print('reordered');
+                  },
+                  delegate: ReorderableSliverChildBuilderDelegate(
                   (context, index) => widget.separatorBuilder == null
                       ? _buildItem(index + widget.positionedIndex)
                       : _buildSeparatedListElement(
@@ -203,8 +210,11 @@ class _PositionedListState extends State<PositionedList> {
                 widget.positionedIndex < widget.itemCount - 1)
               SliverPadding(
                 padding: _trailingSliverPadding,
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
+                sliver: ReorderableSliverList(
+                  onReorder: (int item1, int item2) {
+                    print('reordered');
+                  },
+                  delegate: ReorderableSliverChildBuilderDelegate(
                     (context, index) => widget.separatorBuilder == null
                         ? _buildItem(index + widget.positionedIndex + 1)
                         : _buildSeparatedListElement(
